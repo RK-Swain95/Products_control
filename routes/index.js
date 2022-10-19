@@ -1,0 +1,7 @@
+const express = require("express");
+
+const router = express.Router();
+// router.use("/api", apiLimiter);
+router.use("/api", require('./api/index'));
+
+module.exports = router;
