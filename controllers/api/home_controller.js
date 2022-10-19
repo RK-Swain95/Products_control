@@ -52,3 +52,52 @@ module.exports.allData= function (req,res){
   return res.status(500);
 }
 
+//Find the top five record based on popularity of all subcategory.
+module.exports.popularity=async function(req,res){
+  try{
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    //console.log(productsArray[0]);
+    const topN = (productsArray, n) => {
+      if(n > productsArray.length){
+         return false;
+      }
+      return productsArray
+      .slice()
+      .sort((a, b) => {
+         return parseInt(b.popularity) - parseInt(a.popularity)
+      })
+      .slice(0, n);
+   };
+   const data=topN(productsArray,5);
+    return res.status(200).json({
+      
+      data:data
+    });
+
+    
+  }catch(err){
+    return res.status(500).json({
+      messsage : "Error"
+  });
+  }
+}
+
+//find the product of all subcategory whose popularity is less than 500;
+module.exports.lesspopularity=async function(req,res){
+try{
+  const allproducts= await Products.findById(req.params.id);
+  const productsArray=allproducts.products;
+  const data=productsArray.filter((element)=>parseInt(element.popularity)<500);
+  return res.status(200).json({
+      
+    data:data
+  });
+
+}catch(err){
+  return res.status(500).json({
+    messsage : "Error"
+});
+}
+
+}
