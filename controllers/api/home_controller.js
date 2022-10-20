@@ -153,7 +153,7 @@ module.exports.smartwatch=async function(req,res){
   }
 }
 
-
+//Find the list of subcategory as mobile and title like LG or lg.
 module.exports.sublg=async function(req,res){
   try{
     const allproducts= await Products.findById(req.params.id);
@@ -171,5 +171,84 @@ module.exports.sublg=async function(req,res){
     return res.status(500).json({
       messsage : "Error"
   });
+  }
+}
+
+
+//Find the ids of subcategory as mobile and title like LG or lg.
+module.exports.idlg=async function(req,res){
+  try{
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    const lgmobile=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='LG';
+    });
+    const lgid=lgmobile.map((element)=>element.pro_id);
+    console.log(lgid);
+    return res.status(200).json({
+      
+      data:lgid
+    });
+
+  }catch(err){
+    return res.status(500).json({
+      messsage : "Error"
+  })
+  }
+}
+
+
+
+//find the total record and all subcategory product record.
+module.exports.subcount=async function(req,res){
+  try{
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const uniqueIds = [];
+    const unique = productsArray.filter(element => {
+    const isDuplicate = uniqueIds.includes(element.subcategory);
+    
+      if (!isDuplicate) {
+        uniqueIds.push(element.subcategory);
+    
+        return true;
+      }
+        return false;
+    });
+     const uniquesub=[];
+    for(let i of unique){
+      uniquesub.push(i.subcategory);
+    }
+   var total=0;
+   const subcount=[];
+    for(let i of uniquesub){
+    const countsub=productsArray.filter((element)=>element.subcategory==i);
+    const sub_length=countsub.length;
+      subcount.push({
+        'subcategory':i,
+        'count':sub_length
+      });
+      total=total+sub_length;
+    }
+    
+    let mainobj={
+      "total":total
+    }
+    let subobj={};
+    for(let i of subcount){
+      subobj[i.subcategory]=i.count;
+    }
+    mainobj["subcategory"]=subobj;
+   
+    return res.status(200).json({
+      data:mainobj
+    });
+
+  }catch(err){
+    return res.status(500).json({
+      messsage :`${err}`
+  })
   }
 }

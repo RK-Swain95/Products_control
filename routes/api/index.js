@@ -10,4 +10,6 @@ router.get('/getData', homeController.allData);
  router.get('/nokiaxolo/:id',homeController.mobileRange);
  router.get('/smartwatch/:id',homeController.smartwatch);
  router.get('/lgmobile/:id',homeController.sublg);
+ router.get('/mobileid/:id',homeController.idlg);
+ router.get('/subcategory/:id',homeController.subcount);
 module.exports = router;
