@@ -101,3 +101,75 @@ try{
 }
 
 }
+
+//find the mobile and no of record whose price range is between 2000 to 9500 and mobile will be like Nokia and Zen and Xolo
+module.exports.mobileRange=async function(req,res){
+  try{
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    const nokia_xolo=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='Nokia' || brand[0]=='Xolo' || brand[0]=='Zen';
+    });
+    const pricerange=nokia_xolo.filter((element)=>parseInt(element.price)>=2000 && parseInt(element.price)<=9500);
+    return res.status(200).json({
+      
+      data:pricerange
+    });
+
+  }catch(err){
+    return res.status(500).json({
+      messsage : "Error"
+  });
+  }
+}
+
+
+//find the price of smart-watches subcategory whose price is greater than 10000 and sort by popularity high to low
+module.exports.smartwatch=async function(req,res){
+  try{
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const smartwatch=productsArray.filter((element)=>element.subcategory=="smart-watches");
+    const rangesmartwatch=smartwatch.filter((element)=>parseInt(element.price)>10000);
+   function sort(rangesmartwatch){
+      return  rangesmartwatch.sort((a,b)=>{
+      
+            parseInt(b.price) - parseInt(a.price)
+    
+          })
+       }
+    const hightolow=sort(rangesmartwatch);
+    return res.status(200).json({
+      
+      data:hightolow
+    });
+
+  }catch(err){
+    return res.status(500).json({
+      messsage : "Error"
+  });
+  }
+}
+
+
+module.exports.sublg=async function(req,res){
+  try{
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    const lgmobile=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='LG';
+    });
+    return res.status(200).json({
+      
+      data:lgmobile
+    });
+  }catch(err){
+    return res.status(500).json({
+      messsage : "Error"
+  });
+  }
+}
