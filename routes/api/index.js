@@ -12,4 +12,9 @@ router.get('/getData', homeController.allData);
  router.get('/lgmobile/:id',homeController.sublg);
  router.get('/mobileid/:id',homeController.idlg);
  router.get('/subcategory/:id',homeController.subcount);
+
+
+ router.get('/',homeController.show);
+ router.post('/showid/:id',homeController.showid);
+
 module.exports = router;

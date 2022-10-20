@@ -252,3 +252,35 @@ module.exports.subcount=async function(req,res){
   })
   }
 }
+
+
+
+
+//to show
+
+
+module.exports.show=function(req,res){
+  return res.render('user_home',{title:'Home',
+  mobileIds:""});
+}
+
+module.exports.showid=async function(req,res){
+  try{ 
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    const lgmobile=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='LG';
+    });
+    const lgid=lgmobile.map((element)=>element.pro_id);
+   
+    return res.render('user_home',
+    {title:'Home',
+     mobileIds:lgid
+ });
+
+  }catch(err){
+    return res.status(401).send('unauthorized');
+  }
+}

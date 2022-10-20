@@ -3,7 +3,9 @@ const express= require('express');
 const app= express();
 const port=8000;
 //const rateLimit = require("express-rate-limit");
+const expresslayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
+
 
 // const apiLimiter = rateLimit({
 //   windowMs: 60 * 1000, // 15 minutes
@@ -17,8 +19,15 @@ const db=require('./config/mongoose');
 //app.use("/", apiLimiter);
 //use the body
 app.use(express.urlencoded({extended:true}));
-
+app.use(expresslayouts);
+//extract styles ans scripts from sub pages into to layout
+app.set('layout extractStyles',true);
+app.set('layout extractScripts',true);
+//set up view engine
+app.set('view engine','ejs');
+app.set('views','./views');
 app.use('/', require('./routes/index'));
+
 
 
 
