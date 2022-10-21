@@ -14,7 +14,7 @@ router.get('/getData', homeController.allData);
  router.get('/subcategory/:id',homeController.subcount);
 
 
- router.get('/',homeController.show);
- router.post('/showid/:id',homeController.showid);
+ 
+ 
 
 module.exports = router;

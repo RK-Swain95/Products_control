@@ -1,17 +1,61 @@
-
-
-    <form action="/api/showid/635040239813c8dc9690d23a"  method="post">
-    <input type="submit" value="Show LG Ids">
+<div class="modal  modal-signin position-static d-block"style="height: 601px; tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-body h-100 bg-secondary p-5 pt-5">
+<div class="mb-3">
+    <form action="/api/lgmobile/635040239813c8dc9690d23a"  method="get">
+        <input type="submit" class="btn btn-dark" value="Show LG subcategory">
+    </form>
+</div>
+ <div class="mb-3">
+    <form action="/showid/635040239813c8dc9690d23a"  method="get">
+    <input type="submit"class="btn btn-dark" value="Show LG Ids">
     <div>
         <% if(mobileIds){%>
-        
-        
+         
+        <h4>Ids</h4>
+        <div class="text-light bg-dark w-auto p-3" >
             <%=mobileIds%>
+        </div>
+        
+        <%}%>
+   </div>
+   </form>
+</div>
+<div class="mb-3">
+    <form action="/toppopularity/635040239813c8dc9690d23a"  method="get">
+        <input type="submit" class="btn btn-dark" value="Show top 5 popularity">
+        <div>
+            <% if(topfive){%>
             
+            <h4>Top five</h4>
+            <div class="text-light bg-dark w-75 p-3" >
+             <%=topfive%>
+             </div>
             <%}%>
-
-    </div>
-   
-    
+       </div>
+       </form>
+</div>
+<div class="mb-3">
+    <form action="/api/nokiaxolo/635040239813c8dc9690d23a"  method="get">
+        <input type="submit" class="btn btn-dark" value="Nokia_Xolo_Zen(2000-9500)">
     </form>
-   
+</div>
+
+<div class="mb-3">
+    <form action="/api/lesspopularity/635040239813c8dc9690d23a"  method="get">
+        <input type="submit" class="btn btn-dark" value="popularity is less than 500">
+    </form>
+</div>
+
+<div class="mb-3">
+    <form action="/api/subcategory/635040239813c8dc9690d23a"  method="get">
+        <input type="submit" class="btn btn-dark" value="all subcategory product record">
+    </form>
+</div>
+<div class="mb-3">
+    <form action="/api/smartwatch/635040239813c8dc9690d23a"  method="get">
+        <input class="btn btn-dark"  type="submit" value="smart-watches (price>10000)">
+    </form>
+</div>
+
+</div>
+</div>

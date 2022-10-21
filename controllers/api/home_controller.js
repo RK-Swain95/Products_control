@@ -72,7 +72,7 @@ module.exports.popularity=async function(req,res){
    const data=topN(productsArray,5);
     return res.status(200).json({
       
-      data:data
+      products:data
     });
 
     
@@ -91,7 +91,7 @@ try{
   const data=productsArray.filter((element)=>parseInt(element.popularity)<500);
   return res.status(200).json({
       
-    data:data
+    products:data
   });
 
 }catch(err){
@@ -115,7 +115,7 @@ module.exports.mobileRange=async function(req,res){
     const pricerange=nokia_xolo.filter((element)=>parseInt(element.price)>=2000 && parseInt(element.price)<=9500);
     return res.status(200).json({
       
-      data:pricerange
+      products:pricerange
     });
 
   }catch(err){
@@ -165,7 +165,7 @@ module.exports.sublg=async function(req,res){
     });
     return res.status(200).json({
       
-      data:lgmobile
+      products:lgmobile
     });
   }catch(err){
     return res.status(500).json({
@@ -261,26 +261,7 @@ module.exports.subcount=async function(req,res){
 
 module.exports.show=function(req,res){
   return res.render('user_home',{title:'Home',
-  mobileIds:""});
+  mobileIds:"",
+  topfive:""});
 }
 
-module.exports.showid=async function(req,res){
-  try{ 
-    const allproducts= await Products.findById(req.params.id);
-    const productsArray=allproducts.products;
-    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
-    const lgmobile=mobile.filter((element)=>{
-      const brand=element.title.split(" ");
-      return brand[0]=='LG';
-    });
-    const lgid=lgmobile.map((element)=>element.pro_id);
-   
-    return res.render('user_home',
-    {title:'Home',
-     mobileIds:lgid
- });
-
-  }catch(err){
-    return res.status(401).send('unauthorized');
-  }
-}
