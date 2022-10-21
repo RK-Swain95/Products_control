@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aninda Sundar Roy",
@@ -16,6 +17,7 @@
     "express-rate-limit": "^6.6.0",
     "mongoose": "^6.6.5",
     "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.20",
     "request": "^2.88.2"
   }
 }
