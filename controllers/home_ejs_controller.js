@@ -5,7 +5,8 @@ var express = require('express');
 module.exports.show=function(req,res){
     return res.render('user_home',{title:'Home',
     mobileIds:"",
-    topfive:""});
+    topfive:"",
+    popularityvalue:""});
   }
 
 //Find the top five record based on popularity of all subcategory.
@@ -27,10 +28,12 @@ module.exports.toppopularity=async function(req,res){
      };
      const data=topN(productsArray,5);
      const popname=data.map((element)=>element.title);
+     const popularityvalue=data.map((element)=>element.popularity);
      return res.render('user_home',
      {title:'Home',
       topfive:popname,
-      mobileIds:""
+      mobileIds:"",
+      popularityvalue:popularityvalue
   });
   
       
@@ -55,7 +58,8 @@ module.exports.toppopularity=async function(req,res){
       return res.render('user_home',
       {title:'Home',
        mobileIds:lgid,
-       topfive:""
+       topfive:"",
+       popularityvalue:""
    });
   
     }catch(err){
