@@ -1,7 +1,7 @@
 const express= require('express');
-
 const app= express();
 const port=8000;
+const dotenv=require("dotenv").config();
 //const rateLimit = require("express-rate-limit");
 const expresslayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
