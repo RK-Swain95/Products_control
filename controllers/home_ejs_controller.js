@@ -76,3 +76,52 @@ module.exports.toppopularity=async function(req,res){
       return res.status(401).send('unauthorized');
     }
   }
+
+  //1.Find the list of subcategory as mobile and title like LG or lg.
+module.exports.sublg=async function(req,res){
+  try{
+    //find the products from database
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    //filtering out only mobile from products
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    //filtering the LG mobile only
+    const lgmobile=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='LG';
+    });
+    return res.render('user_id',
+    {title:'Data',
+     mobileIds:lgmobile,
+     pricerange:""
+ });
+  }catch(err){
+    return res.status(401).send('unauthorized');
+  }
+}
+
+
+//4.find the mobile and no of record whose price range is between 2000 to 9500 and mobile will be like Nokia and Zen and Xolo
+module.exports.mobileRange=async function(req,res){
+  try{
+    //find the products from database
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    //storing only Nokia ,xolo and Zen mobile phone in a array
+    const nokia_xolo=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='Nokia' || brand[0]=='Xolo' || brand[0]=='Zen';
+    });
+    //storing nokia,xolo,zen whose price greater than 2000 and less than 9500
+    const pricerange=nokia_xolo.filter((element)=>parseInt(element.price)>=2000 && parseInt(element.price)<=9500);
+    return res.render('user_id',
+    {title:'Data',
+     mobileIds:"",
+     pricerange:pricerange
+ });
+
+  }catch(err){
+    return res.status(401).send('unauthorized');
+  }
+}

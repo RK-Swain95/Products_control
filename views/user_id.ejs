@@ -1,0 +1,23 @@
+<div class="modal  modal-signin position-static d-block bg-secondary d-flex align-content-stretch flex-wrap justify-content-evenly"style="height: auto; tabindex="-1" role="dialog" id="modalSignin">
+
+    <% if(mobileIds){%>
+    <% for(let i of mobileIds){%>
+    <div class="mb-3 bg-light border w-25 p-3 text-center">
+    <p><%="Id="%><%=i.pro_id%></p>   
+    <p><%="Name="%><%=i.title%></p>
+    <p><%="Price="%><%=i.price%></p>
+    <p><%="popularity="%><%=i.popularity%></p>
+   </div>
+    <%}%>
+    <%}else{%>
+        <% for(let i of pricerange){%>
+            <div class="mb-3 bg-light border w-25 p-3 text-center">
+            <p><%="Id="%><%=i.pro_id%></p>   
+            <p><%="Name="%><%=i.title%></p>
+            <p><%="Price="%><%=i.price%></p>
+            <p><%="popularity="%><%=i.popularity%></p>
+           </div>
+        <%}%>
+    <%}%>
+
+</div>

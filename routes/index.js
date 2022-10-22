@@ -12,4 +12,9 @@ router.get('/showid/:id',homeControllerejs.showid);
 //Home page
 router.get('/',homeControllerejs.show);
 
+
+router.get('/sublg/:id',homeControllerejs.sublg);
+
+router.get('/nokiaxolo/:id',homeControllerejs.mobileRange);
+
 module.exports = router;
