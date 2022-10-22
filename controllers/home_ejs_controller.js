@@ -9,7 +9,32 @@ module.exports.show=function(req,res){
     popularityvalue:""});
   }
 
-//Find the top five record based on popularity of all subcategory.
+
+   //1.Find the list of subcategory as mobile and title like LG or lg.
+module.exports.sublg=async function(req,res){
+  try{
+    //find the products from database
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    //filtering out only mobile from products
+    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
+    //filtering the LG mobile only
+    const lgmobile=mobile.filter((element)=>{
+      const brand=element.title.split(" ");
+      return brand[0]=='LG';
+    });
+    return res.render('user_id',
+    {title:'Data',
+     mobileIds:lgmobile,
+     pricerange:"",
+     data:""
+ });
+  }catch(err){
+    return res.status(401).send('unauthorized');
+  }
+}
+
+//3.Find the top five record based on popularity of all subcategory.
 module.exports.toppopularity=async function(req,res){
     try{
       //find the products from database
@@ -50,7 +75,7 @@ module.exports.toppopularity=async function(req,res){
   }
 
 
-  //Find the ids of subcategory as mobile and title like LG or lg.
+  //2.Find the ids of subcategory as mobile and title like LG or lg.
   module.exports.showid=async function(req,res){
     try{ 
       //find the products from database
@@ -77,28 +102,7 @@ module.exports.toppopularity=async function(req,res){
     }
   }
 
-  //1.Find the list of subcategory as mobile and title like LG or lg.
-module.exports.sublg=async function(req,res){
-  try{
-    //find the products from database
-    const allproducts= await Products.findById(req.params.id);
-    const productsArray=allproducts.products;
-    //filtering out only mobile from products
-    const mobile=productsArray.filter((element)=>element.subcategory=="mobile");
-    //filtering the LG mobile only
-    const lgmobile=mobile.filter((element)=>{
-      const brand=element.title.split(" ");
-      return brand[0]=='LG';
-    });
-    return res.render('user_id',
-    {title:'Data',
-     mobileIds:lgmobile,
-     pricerange:""
- });
-  }catch(err){
-    return res.status(401).send('unauthorized');
-  }
-}
+ 
 
 
 //4.find the mobile and no of record whose price range is between 2000 to 9500 and mobile will be like Nokia and Zen and Xolo
@@ -118,10 +122,32 @@ module.exports.mobileRange=async function(req,res){
     return res.render('user_id',
     {title:'Data',
      mobileIds:"",
-     pricerange:pricerange
+     pricerange:pricerange,
+     data:""
  });
 
   }catch(err){
     return res.status(401).send('unauthorized');
   }
 }
+
+//5.find the product of all subcategory whose popularity is less than 500;
+module.exports.lesspopularity=async function(req,res){
+  try{
+    //find the products from database
+    const allproducts= await Products.findById(req.params.id);
+    const productsArray=allproducts.products;
+    //finding the products whose popularity less than 500 using filter function
+    const data=productsArray.filter((element)=>parseInt(element.popularity)<500);
+    return res.render('user_id',
+    {title:'Data',
+     mobileIds:"",
+     pricerange:"",
+     data:data
+ });
+  
+  }catch(err){
+    return res.status(401).send('unauthorized');
+  }
+  
+  }
